@@ -31,6 +31,7 @@ public class Sensor {
                 throw new LeituraInvalidaException(i, temp);
             }
         }
+        this.leituras = lista;
     }
 
     //TooString

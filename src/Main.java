@@ -1,20 +1,39 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Main {
     public static void main(String[] args) {
-        //ATRIBUTO
-        int aux = 60;
+        //LIST
+        List<Sensor> listaSensor = new ArrayList<>();
+        List<List<Double>> listaTemperatura = new ArrayList<>();
 
-        //TRY CATCH
-        try{
-            validar(aux);
-        } catch (LeituraInvalidaException e) {
-            System.out.println(e.getMessage());
+        for (int i=0; i<=3; i++){
+            listaSensor.add(new Sensor(String.valueOf(i)));
+            listaTemperatura.add(gerar(i));
         }
+
+        SistemaMonitoramento sistema = new SistemaMonitoramento();
+        sistema.processarSensores(listaSensor, listaTemperatura);
+        sistema.exibirRelatorio();
     }
 
     //METODO
-    private static void validar(int aux) throws LeituraInvalidaException {
-        if (aux < -50 || aux > 50){
-          throw new LeituraInvalidaException(10, aux);
+    private static List<Double> gerar(int i){
+        Random random = new Random();
+        List<Double> temperatura = new ArrayList<>();
+        int total = 100;
+        int limite = 60;
+
+        switch(i) {
+            case 2 -> total = total / 2;
+            case 3 -> limite = limite * 3;
         }
+
+        for(int k = 0; k<total; k++){
+            temperatura.add(random.nextDouble(-limite, limite));
+        }
+
+        return temperatura;
     }
 }
